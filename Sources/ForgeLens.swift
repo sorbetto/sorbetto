@@ -9,7 +9,6 @@ public struct ForgeLens {
                  plugins: forge.plugins,
                  ignores: forge.ignores,
                  context: forge.context,
-                 shouldClean: forge.shouldClean,
                  parsesFrontmatter: forge.parsesFrontmatter)
   })
 
@@ -20,7 +19,6 @@ public struct ForgeLens {
                  plugins: forge.plugins,
                  ignores: forge.ignores,
                  context: forge.context,
-                 shouldClean: forge.shouldClean,
                  parsesFrontmatter: forge.parsesFrontmatter)
   })
 
@@ -31,7 +29,6 @@ public struct ForgeLens {
                  plugins: forge.plugins,
                  ignores: forge.ignores,
                  context: forge.context,
-                 shouldClean: forge.shouldClean,
                  parsesFrontmatter: forge.parsesFrontmatter)
   })
 
@@ -42,7 +39,6 @@ public struct ForgeLens {
                  plugins: plugins,
                  ignores: forge.ignores,
                  context: forge.context,
-                 shouldClean: forge.shouldClean,
                  parsesFrontmatter: forge.parsesFrontmatter)
   })
 
@@ -53,7 +49,6 @@ public struct ForgeLens {
                  plugins: forge.plugins,
                  ignores: ignores,
                  context: forge.context,
-                 shouldClean: forge.shouldClean,
                  parsesFrontmatter: forge.parsesFrontmatter)
   })
 
@@ -64,18 +59,6 @@ public struct ForgeLens {
                  plugins: forge.plugins,
                  ignores: forge.ignores,
                  context: context,
-                 shouldClean: forge.shouldClean,
-                 parsesFrontmatter: forge.parsesFrontmatter)
-  })
-
-  public static let shouldClean = Lens<Forge, Bool>(from: { $0.shouldClean }, to: { shouldClean, forge -> Forge in
-    return Forge(container: forge.container,
-                 source: forge.source,
-                 destination: forge.destination,
-                 plugins: forge.plugins,
-                 ignores: forge.ignores,
-                 context: forge.context,
-                 shouldClean: shouldClean,
                  parsesFrontmatter: forge.parsesFrontmatter)
   })
 
@@ -86,7 +69,6 @@ public struct ForgeLens {
                  plugins: forge.plugins,
                  ignores: forge.ignores,
                  context: forge.context,
-                 shouldClean: forge.shouldClean,
                  parsesFrontmatter: parsesFrontmatter)
   })
 }

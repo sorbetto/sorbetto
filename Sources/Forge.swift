@@ -30,7 +30,6 @@ public struct Forge {
   let plugins: [Plugin]
   let ignores: [Path]
   let context: [Yaml : Yaml]
-  let shouldClean: Bool
   let parsesFrontmatter: Bool
 
   public init(container: Path = Path.current,
@@ -39,7 +38,6 @@ public struct Forge {
     plugins: [Plugin] = [],
     ignores: [Path] = [],
     context: [Yaml : Yaml] = [:],
-    shouldClean: Bool = true,
     parsesFrontmatter: Bool = true
   ) {
     self.container = container
@@ -48,7 +46,6 @@ public struct Forge {
     self.plugins = plugins
     self.ignores = ignores
     self.context = context
-    self.shouldClean = shouldClean
     self.parsesFrontmatter = parsesFrontmatter
   }
 }
@@ -62,11 +59,6 @@ extension Forge {
   public func ignoring(paths: [Path]) -> Forge {
     let lens = ForgeLens.ignores
     return lens.to(lens.from(self) + paths, self)
-  }
-
-  public func clean(shouldClean: Bool) -> Forge {
-    let lens = ForgeLens.shouldClean
-    return lens.to(shouldClean, self)
   }
 
   public func frontmatter(parseFrontmatter: Bool) -> Forge {

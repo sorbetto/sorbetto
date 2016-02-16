@@ -31,7 +31,6 @@ func testForge() {
           try expect(newForge.destination) == forge.destination
           try expect(newForge.plugins.count) == forge.plugins.count
           try expect(newForge.ignores.count) == forge.ignores.count
-          try expect(newForge.shouldClean) == forge.shouldClean
           try expect(newForge.parsesFrontmatter) == forge.parsesFrontmatter
         }
       }
@@ -60,7 +59,6 @@ func testForge() {
           try expect(newForge.destination) == forge.destination
           try expect(newForge.plugins.count) == forge.plugins.count
           try expect(newForge.ignores.count) == forge.ignores.count
-          try expect(newForge.shouldClean) == forge.shouldClean
           try expect(newForge.parsesFrontmatter) == forge.parsesFrontmatter
         }
       }
@@ -89,7 +87,6 @@ func testForge() {
           try expect(newForge.destination) == forge.destination
           try expect(newForge.plugins.count) == forge.plugins.count
           try expect(newForge.ignores.count) == forge.ignores.count
-          try expect(newForge.shouldClean) == forge.shouldClean
           try expect(newForge.parsesFrontmatter) == forge.parsesFrontmatter
         }
       }
