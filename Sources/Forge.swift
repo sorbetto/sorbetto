@@ -53,6 +53,21 @@ extension Forge {
     let lens = Forge.pluginsLens
     return lens.set(lens.get(self) + [plugin], self)
   }
+
+  public func ignore(paths: [Path]) -> Forge {
+    let lens = Forge.ignoreLens
+    return lens.set(lens.get(self) + paths, self)
+  }
+
+  public func clean(shouldClean: Bool) -> Forge {
+    let lens = Forge.shouldCleanLens
+    return lens.set(shouldClean, self) 
+  }
+
+  public func frontmatter(parseFrontmatter: Bool) -> Forge {
+    let lens = Forge.parsesFrontmatterLens
+    return lens.set(parseFrontmatter, self)
+  }
 }
 
 extension Forge {
