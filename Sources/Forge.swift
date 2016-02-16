@@ -48,6 +48,10 @@ public struct Forge {
     self.context = context
     self.parsesFrontmatter = parsesFrontmatter
   }
+
+  func build(clean clean: Bool = true) {
+
+  }
 }
 
 extension Forge {
