@@ -23,15 +23,15 @@ public typealias PluginParameterType = ([File], Forge)
 public typealias Plugin = (PluginParameterType) -> PluginParameterType
 
 public struct Forge {
-  public let container: Path
-  public let source: Path
-  public let destination: Path
+  let container: Path
+  let source: Path
+  let destination: Path
 
-  public let plugins: [Plugin]
-  public let ignores: [Path]
-  public let context: [Yaml : Yaml]
-  public let shouldClean: Bool
-  public let parsesFrontmatter: Bool
+  let plugins: [Plugin]
+  let ignores: [Path]
+  let context: [Yaml : Yaml]
+  let shouldClean: Bool
+  let parsesFrontmatter: Bool
 
   public init(container: Path = Path.current,
     source: Path = "site",
