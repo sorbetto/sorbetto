@@ -1,11 +1,18 @@
+import Foundation
 import PathKit
 import Yaml
 
 public struct File {
   public let path: Path
+  public let mode: Int
+  public let contents: NSData
+  public let frontmatter: [Yaml : Yaml]
 
-  public init(path: Path) {
+  public init(path: Path, mode: Int, contents: NSData, frontmatter: [Yaml : Yaml]) {
     self.path = path
+    self.mode = mode
+    self.contents = contents
+    self.frontmatter = frontmatter
   }
 }
 
@@ -47,6 +54,22 @@ public struct Forge {
     self.ignores = ignores
     self.context = context
     self.parsesFrontmatter = parsesFrontmatter
+  }
+
+  func readFile(path: Path) -> File {
+    return File(path: path, mode: 0o0000, contents: NSData(), frontmatter: [:])
+  }
+
+  func read() -> [Path : File] {
+    let paths = container.glob("*")
+      .filter(ignores.contains)
+
+    var result = [Path : File](minimumCapacity: paths.count)
+    for path in paths {
+      result[path] = readFile(path)
+    }
+
+    return result
   }
 
   func build(clean clean: Bool = true) {
