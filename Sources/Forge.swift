@@ -10,8 +10,8 @@ public struct File {
 }
 
 public struct Lens<ObjectType, PropertyType> {
-  let from: ObjectType -> PropertyType
-  let to: (PropertyType, ObjectType) -> ObjectType
+  public let from: ObjectType -> PropertyType
+  public let to: (PropertyType, ObjectType) -> ObjectType
 }
 
 public typealias PluginParameterType = ([File], Forge)
@@ -36,7 +36,7 @@ public struct Forge {
     context: [Yaml : Yaml] = [:],
     shouldClean: Bool = true,
     parsesFrontmatter: Bool = true
-    ) {
+  ) {
     self.container = container
     self.source = source
     self.destination = destination
