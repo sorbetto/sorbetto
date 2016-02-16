@@ -4,18 +4,23 @@ import Yaml
 public struct File {
   public let path: Path
 
-  init(path: Path) {
+  public init(path: Path) {
     self.path = path
   }
 }
 
 public struct Lens<ObjectType, PropertyType> {
-  public let from: ObjectType -> PropertyType
+  public let from: (ObjectType) -> PropertyType
   public let to: (PropertyType, ObjectType) -> ObjectType
+
+  public init(from: (ObjectType) -> PropertyType, to: (PropertyType, ObjectType) -> ObjectType) {
+    self.from = from
+    self.to = to
+  }
 }
 
 public typealias PluginParameterType = ([File], Forge)
-public typealias Plugin = PluginParameterType -> PluginParameterType
+public typealias Plugin = (PluginParameterType) -> PluginParameterType
 
 public struct Forge {
   public let container: Path
