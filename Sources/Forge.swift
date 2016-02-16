@@ -54,12 +54,12 @@ public struct Forge {
 }
 
 extension Forge {
-  public func use(plugin: Plugin) -> Forge {
+  public func using(plugin: Plugin) -> Forge {
     let lens = ForgeLens.plugins
     return lens.to(lens.from(self) + [plugin], self)
   }
 
-  public func ignore(paths: [Path]) -> Forge {
+  public func ignoring(paths: [Path]) -> Forge {
     let lens = ForgeLens.ignores
     return lens.to(lens.from(self) + paths, self)
   }
