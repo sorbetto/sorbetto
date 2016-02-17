@@ -16,8 +16,26 @@ public struct File {
   }
 }
 
+
 extension File: CustomStringConvertible {
+  private var sizeDescription: String {
+    let KB_PER_B = 1024
+    let MB_PER_B = 1024 * 1024
+    let GB_PER_B = 1024 * 1024 * 1024
+
+    let length = contents.length
+    if length > GB_PER_B {
+      return "\(length / GB_PER_B) GiB"
+    } else if length > MB_PER_B {
+      return "\(length / MB_PER_B) MiB"
+    } else if length > KB_PER_B {
+      return "\(length / KB_PER_B) KiB"
+    } else {
+      return "\(length) B"
+    }
+  }
+
   public var description: String {
-    return "\"\(path)\" 0o\(String(mode, radix: 8)) <\(contents.length) byte(s)>"
+    return "\(path) (\(sizeDescription))"
   }
 }
