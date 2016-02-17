@@ -60,35 +60,22 @@ public struct Forge {
     return File(path: path, mode: 0o0000, contents: NSData(), frontmatter: [:])
   }
 
-  func read() -> [Path : File] {
-    let paths = container.glob("*")
+  func read() -> [File] {
+    return source.glob("*")
+      .lazy
       .filter(ignores.contains)
-
-    var result = [Path : File](minimumCapacity: paths.count)
-    for path in paths {
-      result[path] = readFile(path)
-    }
-
-    return result
+      .map { readFile($0) }
   }
 
   func build(clean clean: Bool = true) {
+    let initial: PluginParameterType = (read(), self)
 
-  }
+    let result = plugins.reduce(initial) { params, plugin in
+      return plugin(params)
+    }
 
-  public func ignore(paths: [Path]) -> Forge {
-    let lens = Forge.ignoresLens
-    return lens.set(lens.get(self) + paths, self)
-  }
 
-  public func clean(shouldClean: Bool) -> Forge {
-    let lens = Forge.shouldCleanLens
-    return lens.set(shouldClean, self) 
-  }
-
-  public func frontmatter(parseFrontmatter: Bool) -> Forge {
-    let lens = Forge.parsesFrontmatterLens
-    return lens.set(parseFrontmatter, self)
+    print(result)
   }
 }
 
