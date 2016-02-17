@@ -16,7 +16,6 @@ public struct File {
   }
 }
 
-
 extension File: CustomStringConvertible {
   private var sizeDescription: String {
     let KB_PER_B = 1024
