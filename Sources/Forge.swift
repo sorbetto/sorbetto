@@ -2,7 +2,7 @@ import Foundation
 import PathKit
 import Yaml
 
-public typealias PluginParameterType = ([File], Forge)
+public typealias PluginParameterType = ([Path : File], Forge)
 public typealias Plugin = (PluginParameterType) -> PluginParameterType
 
 public struct Forge {
@@ -32,27 +32,47 @@ public struct Forge {
     self.parsesFrontmatter = parsesFrontmatter
   }
 
-  func readFile(path: Path) -> File {
-    let mode = path.fileMode ?? 0o0000
-    let contents = (try? path.read()) ?? NSData()
-    return File(path: path, mode: mode, contents: contents, frontmatter: [:])
+  func readFile(path: Path) throws -> File {
+    let contents: NSData = try path.read()
+    return File(contents: contents, context: [:])
   }
 
-  func read() -> [File] {
+  func read() throws -> [Path : File] {
+    let sourceDepth = source.components.count
     let ignores = self.ignores
-    let paths = (try? source.recursiveChildren()) ?? []
-    return paths
+    let paths = try source.recursiveChildren()
       .lazy
       .filter { !$0.isDirectory }
       .filter { !ignores.contains($0) }
-      .map(readFile)
+
+    var result = [Path : File]()
+    for path in paths {
+      let relativePath = Path(components: path.components.dropFirst(sourceDepth))
+      result[relativePath] = try readFile(path)
+    }
+
+    return result
   }
 
-  func build(clean clean: Bool = true) {
-    let initial: PluginParameterType = (read(), self)
+  func writeFile(file: File, toPath path: Path) throws {
+    if !path.parent().exists {
+      try path.parent().mkpath()
+    }
+
+    try path.write(file.contents)
+  }
+
+  func write(files: [Path : File]) throws {
+    for (path, file) in files {
+      try writeFile(file, toPath: destination + path)
+    }
+  }
+
+  func build(clean clean: Bool = true) throws -> [Path : File] {
+    let initial: PluginParameterType = (try read(), self)
     let (files, forge) = plugins.reduce(initial) { params, plugin in plugin(params) }
-    print(files.map { String($0) }.joinWithSeparator("\n"))
-    print(forge)
+    try forge.write(files)
+    return files
   }
 }
 

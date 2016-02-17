@@ -3,16 +3,12 @@ import PathKit
 import Yaml
 
 public struct File {
-  public let path: Path
-  public let mode: Int
   public let contents: NSData
-  public let frontmatter: [Yaml : Yaml]
+  public let context: [Yaml : Yaml]
 
-  public init(path: Path, mode: Int, contents: NSData, frontmatter: [Yaml : Yaml]) {
-    self.path = path
-    self.mode = mode
+  public init(contents: NSData, context: [Yaml : Yaml]) {
     self.contents = contents
-    self.frontmatter = frontmatter
+    self.context = context
   }
 }
 
@@ -35,6 +31,6 @@ extension File: CustomStringConvertible {
   }
 
   public var description: String {
-    return "\(path) (\(sizeDescription))"
+    return "File(contents: <\(sizeDescription)>, context: \(context))"
   }
 }
