@@ -50,13 +50,9 @@ public struct Forge {
 
   func build(clean clean: Bool = true) {
     let initial: PluginParameterType = (read(), self)
-
-    let result = plugins.reduce(initial) { params, plugin in
-      return plugin(params)
-    }
-
-
-    print(result)
+    let (files, forge) = plugins.reduce(initial) { params, plugin in plugin(params) }
+    print(files.map { String($0) }.joinWithSeparator("\n"))
+    print(forge)
   }
 }
 
