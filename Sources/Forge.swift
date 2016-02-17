@@ -2,30 +2,6 @@ import Foundation
 import PathKit
 import Yaml
 
-public struct File {
-  public let path: Path
-  public let mode: Int
-  public let contents: NSData
-  public let frontmatter: [Yaml : Yaml]
-
-  public init(path: Path, mode: Int, contents: NSData, frontmatter: [Yaml : Yaml]) {
-    self.path = path
-    self.mode = mode
-    self.contents = contents
-    self.frontmatter = frontmatter
-  }
-}
-
-public struct Lens<ObjectType, PropertyType> {
-  public let from: (ObjectType) -> PropertyType
-  public let to: (PropertyType, ObjectType) -> ObjectType
-
-  public init(from: (ObjectType) -> PropertyType, to: (PropertyType, ObjectType) -> ObjectType) {
-    self.from = from
-    self.to = to
-  }
-}
-
 public typealias PluginParameterType = ([File], Forge)
 public typealias Plugin = (PluginParameterType) -> PluginParameterType
 
