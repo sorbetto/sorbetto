@@ -39,9 +39,10 @@ public struct Forge {
   }
 
   func read() -> [File] {
-    return source.glob("*")
+    let ignores = self.ignores
+    return source.glob("**/*")
       .lazy
-      .filter(ignores.contains)
+      .filter { !ignores.contains($0) }
       .map(readFile)
   }
 
