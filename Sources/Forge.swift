@@ -3,7 +3,7 @@ import PathKit
 import Yaml
 
 public typealias PluginParameterType = ([Path : File], Forge)
-public typealias Plugin = (PluginParameterType) -> PluginParameterType
+public typealias Plugin = (PluginParameterType) throws -> PluginParameterType
 
 public struct Forge {
   let container: Path
@@ -70,7 +70,7 @@ public struct Forge {
 
   func build(clean clean: Bool = true) throws -> [Path : File] {
     let initial: PluginParameterType = (try read(), self)
-    let (files, forge) = plugins.reduce(initial) { params, plugin in plugin(params) }
+    let (files, forge) = plugins.reduce(initial) { params, plugin in try plugin(params) }
     try forge.write(files)
     return files
   }
