@@ -9,19 +9,19 @@ func testForge() {
 
       $0.context("Container") {
         $0.it("should return the container") {
-          let lens = Forge.containerLens
+          let lens = ForgeLens.container
 
-          let container = lens.get(forge)
+          let container = lens.from(forge)
 
           try expect(container) == forge.container
         }
 
         $0.it("should update the container and preserve other state") {
-          let lens = Forge.containerLens
+          let lens = ForgeLens.container
 
           let newContainer: Path = "./somedir"
-          
-          let newForge = lens.set(newContainer, forge)
+
+          let newForge = lens.to(newContainer, forge)
 
           // Verify Write
           try expect(newForge.container) == newContainer
@@ -30,27 +30,26 @@ func testForge() {
           try expect(newForge.source) == forge.source
           try expect(newForge.destination) == forge.destination
           try expect(newForge.plugins.count) == forge.plugins.count
-          try expect(newForge.ignores.count) == forge.ignores.count 
-          try expect(newForge.shouldClean) == forge.shouldClean
+          try expect(newForge.ignores.count) == forge.ignores.count
           try expect(newForge.parsesFrontmatter) == forge.parsesFrontmatter
         }
       }
 
       $0.context("Source") {
         $0.it("should return the source") {
-          let lens = Forge.sourceLens
+          let lens = ForgeLens.source
 
-          let source = lens.get(forge)
+          let source = lens.from(forge)
 
           try expect(source) == forge.source
         }
 
         $0.it("should update the source and preserve other state") {
-          let lens = Forge.sourceLens
+          let lens = ForgeLens.source
 
           let newSource: Path = "./somedir"
-          
-          let newForge = lens.set(newSource, forge)
+
+          let newForge = lens.to(newSource, forge)
 
           // Verify Write
           try expect(newForge.source) == newSource
@@ -59,27 +58,26 @@ func testForge() {
           try expect(newForge.container) == forge.container
           try expect(newForge.destination) == forge.destination
           try expect(newForge.plugins.count) == forge.plugins.count
-          try expect(newForge.ignores.count) == forge.ignores.count 
-          try expect(newForge.shouldClean) == forge.shouldClean
+          try expect(newForge.ignores.count) == forge.ignores.count
           try expect(newForge.parsesFrontmatter) == forge.parsesFrontmatter
         }
       }
 
       $0.context("Destination") {
         $0.it("should return the destination") {
-          let lens = Forge.destinationLens
+          let lens = ForgeLens.destination
 
-          let destination = lens.get(forge)
+          let destination = lens.from(forge)
 
           try expect(destination) == forge.destination
         }
 
         $0.it("should update the destination and preserve other state") {
-          let lens = Forge.sourceLens
+          let lens = ForgeLens.source
 
           let newSource: Path = "./somedir"
-          
-          let newForge = lens.set(newSource, forge)
+
+          let newForge = lens.to(newSource, forge)
 
           // Verify Write
           try expect(newForge.source) == newSource
@@ -88,8 +86,7 @@ func testForge() {
           try expect(newForge.container) == forge.container
           try expect(newForge.destination) == forge.destination
           try expect(newForge.plugins.count) == forge.plugins.count
-          try expect(newForge.ignores.count) == forge.ignores.count 
-          try expect(newForge.shouldClean) == forge.shouldClean
+          try expect(newForge.ignores.count) == forge.ignores.count
           try expect(newForge.parsesFrontmatter) == forge.parsesFrontmatter
         }
       }
