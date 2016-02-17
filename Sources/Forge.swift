@@ -65,7 +65,7 @@ public struct Forge {
     return source.glob("*")
       .lazy
       .filter(ignores.contains)
-      .map { readFile($0) }
+      .map(readFile)
   }
 
   func build(clean clean: Bool = true) {
