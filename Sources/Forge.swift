@@ -40,8 +40,10 @@ public struct Forge {
 
   func read() -> [File] {
     let ignores = self.ignores
-    return source.glob("**/*")
+    let paths = (try? source.recursiveChildren()) ?? []
+    return paths
       .lazy
+      .filter { !$0.isDirectory }
       .filter { !ignores.contains($0) }
       .map(readFile)
   }
