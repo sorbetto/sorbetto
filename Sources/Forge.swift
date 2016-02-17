@@ -58,7 +58,8 @@ public struct Forge {
 
   func readFile(path: Path) -> File {
     let mode = path.fileMode ?? 0o0000
-    return File(path: path, mode: mode, contents: NSData(), frontmatter: [:])
+    let contents = (try? path.read()) ?? NSData()
+    return File(path: path, mode: mode, contents: contents, frontmatter: [:])
   }
 
   func read() -> [File] {
