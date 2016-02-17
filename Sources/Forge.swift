@@ -38,13 +38,13 @@ public struct Forge {
   }
 
   func read() throws -> [Path : File] {
-    let sourceDepth = source.components.count
     let ignores = self.ignores
     let paths = try source.recursiveChildren()
       .lazy
       .filter { !$0.isDirectory }
       .filter { !ignores.contains($0) }
 
+    let sourceDepth = source.components.count
     var result = [Path : File]()
     for path in paths {
       let relativePath = Path(components: path.components.dropFirst(sourceDepth))
