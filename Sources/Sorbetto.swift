@@ -32,9 +32,38 @@ public struct Sorbetto {
     self.parsesFrontmatter = parsesFrontmatter
   }
 
+  private static let frontmatterTag = "---\n".dataUsingEncoding(NSUTF8StringEncoding)!
+
+  func readFrontmatter(data: NSData) -> (NSData, [Yaml : Yaml])? {
+    // data.length > 8 must be true for "---\n---\n"
+    guard data.length > 2 * Sorbetto.frontmatterTag.length &&
+      data.subdataWithRange(NSRange(0..<Sorbetto.frontmatterTag.length)) == Sorbetto.frontmatterTag
+    else { return nil }
+
+    let endRange = data.rangeOfData(Sorbetto.frontmatterTag,
+      options: [],
+      range: NSRange(Sorbetto.frontmatterTag.length..<data.length))
+    guard endRange.length > 0 else { return nil }
+
+    let yamlData = data.subdataWithRange(NSRange(0..<endRange.location))
+
+    var string: NSString?
+    let encoding = NSString.stringEncodingForData(yamlData, encodingOptions: nil, convertedString: &string, usedLossyConversion: nil)
+    if encoding != 0, let string = string, frontmatter = Yaml.load(string as String).value?.dictionary {
+      let contents = data.subdataWithRange(NSRange(NSMaxRange(endRange)..<data.length))
+      return (contents, frontmatter)
+    } else {
+      return nil
+    }
+  }
+
   func readFile(path: Path) throws -> File {
-    let contents: NSData = try path.read()
-    return File(contents: contents, context: [:])
+    let data: NSData = try path.read()
+    if let (contents, context) = readFrontmatter(data) {
+      return File(contents: contents, context: context)
+    } else {
+      return File(contents: data, context: [:])
+    }
   }
 
   func read() throws -> [Path : File] {
