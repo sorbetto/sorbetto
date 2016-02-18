@@ -2,10 +2,10 @@ import Foundation
 import PathKit
 import Yaml
 
-public typealias PluginParameterType = ([Path : File], Forge)
+public typealias PluginParameterType = ([Path : File], Sorbetto)
 public typealias Plugin = (PluginParameterType) throws -> PluginParameterType
 
-public struct Forge {
+public struct Sorbetto {
   let container: Path
   let source: Path
   let destination: Path
@@ -70,25 +70,25 @@ public struct Forge {
 
   func build(clean clean: Bool = true) throws -> [Path : File] {
     let initial: PluginParameterType = (try read(), self)
-    let (files, forge) = plugins.reduce(initial) { params, plugin in try plugin(params) }
-    try forge.write(files)
+    let (files, sorbetto) = try plugins.reduce(initial) { params, plugin in try plugin(params) }
+    try sorbetto.write(files)
     return files
   }
 }
 
-extension Forge {
-  public func using(plugin: Plugin) -> Forge {
-    let lens = ForgeLens.plugins
+extension Sorbetto {
+  public func using(plugin: Plugin) -> Sorbetto {
+    let lens = SorbettoLens.plugins
     return lens.to(lens.from(self) + [plugin], self)
   }
 
-  public func ignoring(paths: [Path]) -> Forge {
-    let lens = ForgeLens.ignores
+  public func ignoring(paths: [Path]) -> Sorbetto {
+    let lens = SorbettoLens.ignores
     return lens.to(lens.from(self) + paths, self)
   }
 
-  public func frontmatter(parseFrontmatter: Bool) -> Forge {
-    let lens = ForgeLens.parsesFrontmatter
+  public func frontmatter(parseFrontmatter: Bool) -> Sorbetto {
+    let lens = SorbettoLens.parsesFrontmatter
     return lens.to(parseFrontmatter, self)
   }
 }

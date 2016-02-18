@@ -1,7 +1,7 @@
 import PackageDescription
 
 let package = Package(
-  name: "Forge",
+  name: "Sorbetto",
   dependencies: [
  //   .Package(url: "https://github.com/KyleF/PathKit.git", majorVersion: 0),
     .Package(url: "https://github.com/behrang/YamlSwift.git", majorVersion: 1),
