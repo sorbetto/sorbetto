@@ -1,0 +1,57 @@
+<% post = current_page.data %>
+<% post_title = post.title %>
+<% post_date = current_page.date %>
+<% post_tags = post.categories || post.tags %>
+<% pretty_post_date = post_date.strftime('%d %B %Y') %>
+<% display_tags = post_tags.length > 0 %>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Always force latest IE rendering engine or request Chrome Frame -->
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title><%= current_page.data.title || "Daniel Tomlinson" %></title>
+
+    <%= stylesheet_link_tag "normalize", "all" %>
+    <%= javascript_include_tag  "all" %>
+
+    <script src="https://use.typekit.net/nxp2uhe.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+  </head>
+
+  <body class="<%= page_classes %>">
+    <header>
+      <h1><a href="http://dantoml.com">Daniel Tomlinson</a></h1>
+    </header>
+    <section>
+    	<article>
+    		<header class="post-header">
+    			<h1><%= post_title %></h1>
+    			<span>
+    			<time class="post-date" datetime="<%= post_date.strftime('%Y/%m/%d') %>"><%= pretty_post_date %></time><% if display_tags %> on <%= pretty_tags post %><% end %></span>
+    		</header>
+    		<section class="post-content">
+    		<%= yield %>
+    		</section>
+		</article>
+	</section>
+    <!-- Piwik -->
+    <script type="text/javascript">
+      var _paq = _paq || [];
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function() {
+        var u="//piwik.srv.henriwatson.com/";
+        _paq.push(['setTrackerUrl', u+'piwik.php']);
+        _paq.push(['setSiteId', 2]);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+      })();
+    </script>
+    <noscript><p><img src="//piwik.srv.henriwatson.com/piwik.php?idsite=2" style="border:0;" alt="" /></p></noscript>
+    <!-- End Piwik Code -->
+  </body>
+</html>

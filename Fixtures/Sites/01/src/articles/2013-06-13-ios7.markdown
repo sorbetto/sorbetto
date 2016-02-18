@@ -1,0 +1,29 @@
+---
+layout: post
+title: "iOS7"
+date: 2013-06-13 12:00
+categories: [Articles, iOS, Thoughts, Design, UX]
+---
+
+As most of you will know, Apple re-released its new child into the world - iOS 7, a re-imagined iOS with a brand new design, interactions and API's. Sadly many of us, turned to Twitter/FaceBook/Blogs/\[Insert other social media here\] to criticise and insult the aesthetics. Without using the OS, or even seeing more than a few glimpses in front of the unveiling. And I admit, even I did the same, and was extremely close to selling my iPhone on eBay, getting an Android and doing Java for a while.
+<!-- more -->
+However, I took a step back, looked again and thought "there might just be something to this", so I downloaded the beta at the first possible chance, and have fallen in love with my iPhone all over again. Ok, some of the home screen icons are quite garish with their 80's neon colours, but even Apple has said that it isn't yet [finished with the design](http://www.cultofmac.com/231674/apples-designers-werent-in-charge-of-ios-7-icons-overall-design-still-a-work-in-progress/ "Cult Of Mac - Apple Not finished with Design") - in fact, it was done by their Print and Web marketing designers. This is what Apple do, they think different, come up with something new, and then refine it, again and again.
+
+Yesterday, [Matt Gemmell](http://twitter.com/mattgemmell "Matt Gemmell's Twitter") posted an excellent article to his [blog](http://mattgemmell.com/2013/06/12/ios-7/) going more in depth about the changes, and does an excellent job of it, so I won't delve deeply here.
+
+## The Iconography ##
+The most complained about factor in iOS 7's redesign, is the iconography on its home screen, and yes, some of the icons are quite garish (Safari, Game Centre and NewsStand are what stand out to me. As well as the shade of green used in messages, phone and FaceTime), however, on the whole it is a nice refresh, dropping the designs that came around at a time when pixels were the size of your face^1 and bold gradients, shadows and gloss were required to abstract this fact. 
+
+
+![Before and After of iOS 6/7 icon images](/images/posts/i7vi6icons.jpg "Before and After of iOS 6/7 icon images")
+
+
+The thing is, that heavy gradients, gloss' and shadows aren't _needed_ anymore, with the retina display. We also don't need to be handheld any more, when iPhone OS 1.0 first came out, we were like small children - uneducated, stupid even, unknowing of the future that awaited us. That is over. Apple realises this. Apple is changing this. We need to be aware of and accept this.
+
+## Design is how it works ##
+A rather famous phrase "Design Is How it Works", applies extremely well to iOS 7, it has beautiful new interactions and animations, and although these are still a little buggy, its a **developer** **beta**, it isn't ready for none developers yet, you shouldn't even try. But aside from the odd bugs, things like the new notification centre day view, control centre, and the API's, iOS7 empowers developers to do so much more. Wait, and be ready, just please, wait until its ready before you criticise and berate.
+
+I'd love to hear your thoughts on this, so feel free to drop me a tweet [@DanToml](http://twitter.com/dantoml)
+
+
+1: Pixels were not really the size of your face.

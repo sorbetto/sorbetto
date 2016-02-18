@@ -1,0 +1,10 @@
+---
+title: Blog | Daniel Tomlinson
+---
+<section class="feed">
+	<ul>
+		<% recent_articles(10).each do |a| %>
+			<li><%= a.date.strftime('%d/%m/%Y') %>: <%= link_to a.title, a %></li>
+		<% end %>
+	</ul>
+</section>

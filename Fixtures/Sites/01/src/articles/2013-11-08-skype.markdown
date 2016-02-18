@@ -1,0 +1,11 @@
+---
+layout: post
+title: Losing audio in Skype on Mavericks? Here is how to fix it
+date: 2013-11-08 16:24
+categories: [Advice]
+---
+Many people have complained about Skype losing audio since Mavericks, and I fixed it in the GM, and forgot about it until @xiotex voiced the issue on Twitter today.
+<!-- more -->
+The issue is caused by one of the new energy saving features in Mavericks -> App Nap. App Nap essentially puts apps that are not currently focused to sleep, and is mostly great, although it can have some bad side effects.
+
+To disable AppNap for Skype, right click the Skype icon in Finder, click get info, and the disable app nap option.

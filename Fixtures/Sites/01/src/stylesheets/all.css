@@ -1,0 +1,110 @@
+@charset "utf-8";
+
+body {
+  background: #ffffff;
+  text-align: center;
+  font-family: "ff-tisa-web-pro", serif;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  color: #333333;
+}
+
+body > section {
+  text-align: left;
+  max-width: 640px;
+  margin: 0 auto;
+  font-size: 1.1em;
+}
+
+ol, ul {
+  list-style: none;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "freight-sans-pro", sans-serif;
+  margin-bottom: 0.2em;
+  padding: 0;
+}
+
+p {
+  padding: 0;
+  margin: 1em auto;
+}
+
+h1 {
+  font-size: 3em;
+  margin-bottom: 0.5em;
+}
+
+h2 {
+  font-size: 1.3em;
+  font-weight: 600;
+  margin-top: 1.5em;
+}
+
+a {
+  color: #932192;
+  text-decoration: none;
+}
+
+body > header h1 a, body > header h1 a:hover {
+  border: 0;
+}
+
+body > section.home > ul > li {
+  margin-bottom: 0.2em;
+}
+
+.post-header {
+  margin-bottom: 1em;
+}
+
+.post-header > h1 {
+  margin: 0 auto;
+  font-size: 2em;
+  line-height: 0.75em;
+}
+
+.post-header > span {
+  font-size: 0.75em;
+  color: rgb(158, 171, 179);
+  font-weight: 500;
+  font-family: "Helvetica Neue", sans-serif;
+}
+
+.post-content > p {
+  padding-bottom: 1em;
+}
+
+code, tt {
+  padding: 1px 3px;
+  font-family: Inconsolata, "inconsolata", monospace, sans-serif;
+  font-size: 0.85em;
+  white-space: pre-wrap;
+  border: #E3EDF3 1px solid;
+  background: #F7FAFB;
+  border-radius: 2px;
+}
+
+pre {
+  box-sizing: border-box;
+  margin: 1.75em 0 1.75em 0;
+  border: #E3EDF3 1px solid;
+  width: 100%;
+  padding: 10px;
+  font-family: Inconsolata, monospace, sans-serif;
+  font-size: 0.9em;
+  white-space: pre;
+  overflow: auto;
+  background: #F7FAFB;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  font-size: inherit;
+  white-space: pre-wrap;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
