@@ -68,7 +68,7 @@ public struct Sorbetto {
     }
   }
 
-  func build(clean clean: Bool = true) throws -> [Path : File] {
+  public func build(clean clean: Bool = true) throws -> [Path : File] {
     let initial: PluginParameterType = (try read(), self)
     let (files, sorbetto) = try plugins.reduce(initial) { params, plugin in try plugin(params) }
     try sorbetto.write(files)
