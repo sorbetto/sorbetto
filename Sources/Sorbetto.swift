@@ -62,12 +62,13 @@ public extension Sorbetto {
 private extension Sorbetto {
   func read() throws -> [Path : File] {
     let ignores = self.ignores
-    let paths = try source.recursiveChildren()
+    let absolutePath = (container + source).absolute()
+    let paths = absolutePath
       .lazy
       .filter { !$0.isDirectory }
       .filter { !ignores.contains($0) }
 
-    let sourceDepth = source.components.count
+    let sourceDepth = absolutePath.components.count
     var result = [Path : File]()
     for path in paths {
       let relativePath = Path(components: path.components.dropFirst(sourceDepth))
@@ -79,7 +80,7 @@ private extension Sorbetto {
 
   func write(files: [Path : File]) throws {
     for (path, file) in files {
-      try file.write(destination + path)
+      try file.write(container + destination + path)
     }
   }
 

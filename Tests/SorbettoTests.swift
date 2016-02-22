@@ -4,6 +4,13 @@ import PathKit
 
 func testSorbetto() {
   describe("Sorbetto") {
+    $0.context("Fixture") {
+      $0.it("should build") {
+        try Sorbetto(container: "./Fixtures/Sites/01/", source: "src").build()
+      }
+    }
+
+
     $0.context("Lenses") {
       let sorbetto = Sorbetto()
 
