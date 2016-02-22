@@ -34,3 +34,20 @@ extension File: CustomStringConvertible {
     return "File(contents: <\(sizeDescription)>, context: \(context))"
   }
 }
+
+extension File {
+  static func read(path: Path) throws -> File {
+    let data: NSData = try path.read()
+    
+    return File(contents: data, context: [:])
+  }
+
+  func write(path: Path) throws {
+    if !path.parent().exists {
+      try path.parent().mkpath()
+    }
+
+    try path.write(contents)
+  }
+}
+
