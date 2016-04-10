@@ -5,7 +5,6 @@ import Yaml
 public typealias PluginParameterType = ([Path : File], Sorbetto)
 public typealias Plugin = (PluginParameterType) throws -> PluginParameterType
 
-
 public struct Sorbetto {
   let container: Path
   let source: Path
@@ -93,6 +92,4 @@ private extension Sorbetto {
 
     return plugins
   }
-
 }
-

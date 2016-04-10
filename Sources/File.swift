@@ -38,7 +38,6 @@ extension File: CustomStringConvertible {
 extension File {
   static func read(path: Path) throws -> File {
     let data: NSData = try path.read()
-    
     return File(contents: data, context: [:])
   }
 
@@ -50,4 +49,3 @@ extension File {
     try path.write(contents)
   }
 }
-
