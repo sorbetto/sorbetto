@@ -1,51 +1,41 @@
 import Foundation
 import PathKit
-import Yaml
 
 public struct File {
-  public let contents: NSData
-  public let context: [Yaml : Yaml]
+    let sourcePath: Path?
+    public var metadata = [AnyHashable: Any]()
 
-  public init(contents: NSData, context: [Yaml : Yaml]) {
-    self.contents = contents
-    self.context = context
-  }
-}
+    public var contentsIfLoaded: Data?
+    public var contents: Data {
+        mutating get {
+            let contents: Data
+            if let _contents = contentsIfLoaded {
+                contents = _contents
+            } else if let sourcePath = self.sourcePath, let data = try? sourcePath.read() {
+                contentsIfLoaded = data
+                contents = data
+            } else {
+                let data = Data()
+                contentsIfLoaded = data
+                contents = data
+            }
 
-extension File: CustomStringConvertible {
-  private var sizeDescription: String {
-    let KB_PER_B = 1024
-    let MB_PER_B = 1024 * 1024
-    let GB_PER_B = 1024 * 1024 * 1024
-
-    let length = contents.length
-    if length > GB_PER_B {
-      return "\(length / GB_PER_B) GiB"
-    } else if length > MB_PER_B {
-      return "\(length / MB_PER_B) MiB"
-    } else if length > KB_PER_B {
-      return "\(length / KB_PER_B) KiB"
-    } else {
-      return "\(length) B"
-    }
-  }
-
-  public var description: String {
-    return "File(contents: <\(sizeDescription)>, context: \(context))"
-  }
-}
-
-extension File {
-  static func read(path: Path) throws -> File {
-    let data: NSData = try path.read()
-    return File(contents: data, context: [:])
-  }
-
-  func write(path: Path) throws {
-    if !path.parent().exists {
-      try path.parent().mkpath()
+            return contents
+        }
+        set {
+            contentsIfLoaded = newValue
+        }
     }
 
-    try path.write(contents)
-  }
+    init(sourcePath: Path? = nil, metadata: [AnyHashable: Any] = [:]) {
+        if let sourcePath = sourcePath {
+            assert(sourcePath.isAbsolute)
+        }
+
+        self.sourcePath = sourcePath
+    }
+
+    public init(metadata: [AnyHashable: Any] = [:]) {
+        self.init(sourcePath: nil, metadata: metadata)
+    }
 }

@@ -1,2 +1,0 @@
-testFrontmatter()
-testSorbetto()
