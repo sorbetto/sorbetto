@@ -2,8 +2,8 @@ import Foundation
 import PathKit
 
 public struct File {
-    let sourcePath: Path?
-    public var metadata = [AnyHashable: Any]()
+    fileprivate let sourcePath: Path?
+    public var metadata: [AnyHashable: Any]
 
     public var contentsIfLoaded: Data?
     public var contents: Data {
@@ -33,6 +33,7 @@ public struct File {
         }
 
         self.sourcePath = sourcePath
+        self.metadata = metadata
     }
 
     public init(metadata: [AnyHashable: Any] = [:]) {

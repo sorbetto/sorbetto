@@ -7,10 +7,18 @@ class SorbettoTests: XCTestCase {
         let destination = try Path.uniqueTemporary()
         print(destination)
 
-        let directoryPath = Path(#file) + "../../.." + path
+        //
+        // Why three ".."?
+        //        <-(1) <-(2)         <-(3)
+        // Sorbetto/Tests/SorbettoTests/X.swift
+        //
+        let fileToRoot = "../../.."
+
+        let repoRoot = (Path(#file) + fileToRoot).normalize()
+        let directoryPath = repoRoot + path
         XCTAssertTrue(directoryPath.isDirectory)
 
-        let site = Site(directory: directoryPath)
+        let site = SiteBuilder(directory: directoryPath)
         site.destination = destination
         site.build { error, paths in
             guard error == nil else {
