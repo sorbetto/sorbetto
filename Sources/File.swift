@@ -1,13 +1,13 @@
 import Foundation
 import PathKit
 
-public struct File {
+public class File {
     fileprivate let sourcePath: Path?
-    public var metadata: [AnyHashable: Any]
+    public var metadata: [MetadataKey: Any]
 
     public var contentsIfLoaded: Data?
     public var contents: Data {
-        mutating get {
+        get {
             let contents: Data
             if let _contents = contentsIfLoaded {
                 contents = _contents
@@ -27,7 +27,7 @@ public struct File {
         }
     }
 
-    init(sourcePath: Path? = nil, metadata: [AnyHashable: Any] = [:]) {
+    init(sourcePath: Path? = nil, metadata: [MetadataKey: Any] = [:]) {
         if let sourcePath = sourcePath {
             assert(sourcePath.isAbsolute)
         }
@@ -36,7 +36,8 @@ public struct File {
         self.metadata = metadata
     }
 
-    public init(metadata: [AnyHashable: Any] = [:]) {
-        self.init(sourcePath: nil, metadata: metadata)
+    public init(metadata: [MetadataKey: Any] = [:]) {
+        self.sourcePath = nil
+        self.metadata = metadata
     }
 }

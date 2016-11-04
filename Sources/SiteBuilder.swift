@@ -31,9 +31,9 @@ public struct SiteBuilder {
 
     public var plugins = [Plugin]()
 
-    public var metadata = [AnyHashable: Any]()
+    public var metadata = [MetadataKey: Any]()
 
-    // public var parsesFrontmatter = true
+    public var parsesFrontmatter = true
 
     public var shouldCleanBeforeBuild = true
 
@@ -54,6 +54,11 @@ public struct SiteBuilder {
     }
 
     public func process(completionHandler: @escaping BuildCompletionHandler) {
+        var plugins = self.plugins
+        if parsesFrontmatter {
+            plugins.insert(FrontmatterParser(), at: 0)
+        }
+
         let site = Site(source: absoluteSource, paths: loadPaths())
         site.run(plugins: plugins, completionHandler: completionHandler)
     }
