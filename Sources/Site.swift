@@ -48,4 +48,22 @@ public class Site {
         self.source = source
         self.paths = paths
     }
+
+    public func run(plugins: [Plugin], completionHandler: @escaping BuildCompletionHandler) {
+        guard !plugins.isEmpty else {
+            completionHandler(nil, self)
+            return
+        }
+
+        var nextPlugins = plugins
+
+        let plugin = nextPlugins.removeFirst()
+        plugin.run(site: self) { error in
+            if let error = error {
+                completionHandler(error, self)
+            } else {
+                self.run(plugins: nextPlugins, completionHandler: completionHandler)
+            }
+        }
+    }
 }

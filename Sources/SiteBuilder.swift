@@ -30,7 +30,7 @@ public class SiteBuilder {
 
     public func process(completionHandler: @escaping BuildCompletionHandler) {
         let site = Site(source: absoluteSource, paths: loadPaths())
-        run(site: site, plugins: plugins, completionHandler: completionHandler)
+        site.run(plugins: plugins, completionHandler: completionHandler)
     }
 
     public func build(completionHandler: @escaping BuildCompletionHandler) {
@@ -70,24 +70,6 @@ public class SiteBuilder {
 
     public func ignore(_ filter: @escaping IgnoreFilter) {
         ignoreFilters.append(filter)
-    }
-
-    func run(site: Site, plugins: [Plugin], completionHandler: @escaping BuildCompletionHandler) {
-        guard !plugins.isEmpty else {
-            completionHandler(nil, site)
-            return
-        }
-
-        var nextPlugins = plugins
-
-        let plugin = nextPlugins.removeFirst()
-        plugin.run(site: site) { error in
-            if let error = error {
-                completionHandler(error, site)
-            } else {
-                run(site: site, plugins: nextPlugins, completionHandler: completionHandler)
-            }
-        }
     }
 
     func shouldIgnore(_ path: Path) -> Bool {
