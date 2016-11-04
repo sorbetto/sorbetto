@@ -35,7 +35,7 @@ public struct SiteBuilder {
 
     // public var parsesFrontmatter = true
 
-    // public var shouldCleanBeforeBuild = true
+    public var shouldCleanBeforeBuild = true
 
     public var ignoreFilters = [IgnoreFilter]()
 
@@ -66,6 +66,8 @@ public struct SiteBuilder {
             }
 
             do {
+                try self.cleanIfNeeded()
+
                 for path in site.paths {
                     try self.write(path: path, file: site.memoizedFiles[path])
                 }
@@ -136,6 +138,12 @@ public struct SiteBuilder {
         } else {
             let sourcePath = path.absolutePath(relativeTo: absoluteSource)
             try sourcePath.copy(destinationPath)
+        }
+    }
+
+    func cleanIfNeeded() throws {
+        if shouldCleanBeforeBuild {
+            try absoluteDestination.delete()
         }
     }
 }
