@@ -5,7 +5,6 @@ import XCTest
 class SorbettoTests: XCTestCase {
     func makeTest(path: String) throws {
         let destination = try Path.uniqueTemporary()
-        print(destination)
 
         //
         // Why three ".."?
