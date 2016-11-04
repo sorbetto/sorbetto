@@ -20,11 +20,8 @@ class SorbettoTests: XCTestCase {
 
         let site = SiteBuilder(directory: directoryPath)
         site.destination = destination
-        site.build { error, paths in
-            guard error == nil else {
-                XCTFail(error!.localizedDescription)
-                return
-            }
+        site.build { error, site in
+            XCTAssertNil(error)
         }
     }
 
