@@ -27,17 +27,15 @@ public class File {
         }
     }
 
-    init(sourcePath: Path? = nil, metadata: [MetadataKey: Any] = [:]) {
-        if let sourcePath = sourcePath {
-            assert(sourcePath.isAbsolute)
-        }
-
+    init(sourcePath: Path) {
+        assert(sourcePath.isAbsolute)
         self.sourcePath = sourcePath
-        self.metadata = metadata
+        self.metadata = [:]
     }
 
-    public init(metadata: [MetadataKey: Any] = [:]) {
+    public init(contents: Data, metadata: [MetadataKey: Any] = [:]) {
         self.sourcePath = nil
         self.metadata = metadata
+        self.contentsIfLoaded = contents
     }
 }
