@@ -4,7 +4,7 @@ import PathKit
 public typealias BuildCompletionHandler = (_ error: Error?, _ site: Site) -> Void
 public typealias IgnoreFilter = (Path) -> Bool
 
-public class SiteBuilder {
+public struct SiteBuilder {
     public var directory: Path
     public var source: Path = "./src"
     public var destination: Path = "./build"
@@ -24,7 +24,7 @@ public class SiteBuilder {
         self.directory = directory
     }
 
-    public func use(_ plugin: Plugin) {
+    public mutating func use(_ plugin: Plugin) {
         plugins.append(plugin)
     }
 
@@ -52,7 +52,7 @@ public class SiteBuilder {
         }
     }
 
-    public func ignore(_ path: Path) {
+    public mutating func ignore(_ path: Path) {
         let relativePath: Path
         if path.isAbsolute {
             relativePath = path.relativePath(from: absoluteSource)
@@ -63,12 +63,12 @@ public class SiteBuilder {
         ignoreFilters.append { $0 == relativePath }
     }
 
-    public func ignore(pattern: String) {
+    public mutating func ignore(pattern: String) {
         let paths = absoluteSource.glob(pattern)
         ignoreFilters.append { path in paths.contains(path) }
     }
 
-    public func ignore(_ filter: @escaping IgnoreFilter) {
+    public mutating func ignore(_ filter: @escaping IgnoreFilter) {
         ignoreFilters.append(filter)
     }
 
