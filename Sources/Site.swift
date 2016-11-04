@@ -33,8 +33,13 @@ public class Site {
         set {
             assert(path.isRelative)
 
-            paths.insert(path)
-            memoizedFiles[path] = newValue
+            if let newValue = newValue {
+                paths.insert(path)
+                memoizedFiles[path] = newValue
+            } else {
+                paths.remove(path)
+                memoizedFiles[path] = nil
+            }
         }
     }
 
