@@ -5,23 +5,48 @@ public typealias BuildCompletionHandler = (_ error: Error?, _ site: Site) -> Voi
 public typealias IgnoreFilter = (Path) -> Bool
 
 public struct SiteBuilder {
-    public var directory: Path
-    public var source: Path = "./src"
-    public var destination: Path = "./build"
+    var absoluteSource: Path
+
+    var absoluteDestination: Path
+
+    public var directory: Path {
+        didSet {
+            assert(directory.isAbsolute)
+            absoluteSource = source.absolutePath(relativeTo: directory)
+            absoluteDestination = destination.absolutePath(relativeTo: directory)
+        }
+    }
+
+    public var source: Path {
+        didSet {
+            absoluteSource = source.absolutePath(relativeTo: directory)
+        }
+    }
+
+    public var destination: Path {
+        didSet {
+            absoluteDestination = destination.absolutePath(relativeTo: directory)
+        }
+    }
+
     public var plugins = [Plugin]()
+
     public var metadata = [AnyHashable: Any]()
+
     // public var parsesFrontmatter = true
+
     // public var shouldCleanBeforeBuild = true
+
     public var ignoreFilters = [IgnoreFilter]()
-    var absoluteSource: Path {
-        return source.absolutePath(relativeTo: directory)
-    }
-    var absoluteDestination: Path {
-        return destination.absolutePath(relativeTo: directory)
-    }
 
     public init(directory: Path) {
         self.directory = directory
+
+        self.source = "./src"
+        self.absoluteSource = self.source.absolutePath(relativeTo: directory)
+
+        self.destination = "./build"
+        self.absoluteDestination = self.destination.absolutePath(relativeTo: directory)
     }
 
     public mutating func use(_ plugin: Plugin) {
