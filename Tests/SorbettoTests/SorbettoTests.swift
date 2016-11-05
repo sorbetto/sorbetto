@@ -35,7 +35,7 @@ class SorbettoTests: XCTestCase {
     func testFixture2() throws {
         try makeTest(path: "./Fixtures/Sites/02/") { error, site in
             guard let index = site["index.md"] else {
-                XCTFail("index.md should eist")
+                XCTFail("index.md should exist")
                 return
             }
 
