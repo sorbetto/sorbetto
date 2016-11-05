@@ -46,7 +46,6 @@ class FrontmatterParser: Plugin {
                 file.metadata[.frontmatter] = try Yaml.load(frontmatterString)
             } catch {
                 // A parsing error ocurred. Assume no frontmatter.
-                print(error)
                 continue
             }
 
