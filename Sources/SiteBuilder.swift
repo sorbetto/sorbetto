@@ -39,14 +39,14 @@ public struct SiteBuilder {
 
     public var ignoreFilters = [IgnoreFilter]()
 
-    public init(directory: Path) {
+    public init(directory: Path, source: Path = "./src", destination: Path = "./build") {
         self.directory = directory
 
-        self.source = "./src"
-        self.absoluteSource = self.source.absolutePath(relativeTo: directory)
+        self.source = source
+        self.absoluteSource = source.absolutePath(relativeTo: directory)
 
-        self.destination = "./build"
-        self.absoluteDestination = self.destination.absolutePath(relativeTo: directory)
+        self.destination = destination
+        self.absoluteDestination = destination.absolutePath(relativeTo: directory)
     }
 
     public mutating func use(_ plugin: Plugin) {
