@@ -1,9 +1,16 @@
 import Foundation
 import Yaml
 
-extension MetadataKey {
-    public static var frontmatter: MetadataKey {
-        return MetadataKey("frontmatter")
+extension Metadata {
+    public static let frontmatterKey = MetadataKey<Yaml>()
+
+    public var frontmatter: Yaml? {
+        get {
+            return get(key: Metadata.frontmatterKey)
+        }
+        set {
+            set(key: Metadata.frontmatterKey, value: newValue)
+        }
     }
 }
 
@@ -46,7 +53,7 @@ public class FrontmatterParser: Plugin {
             }
 
             do {
-                file.metadata[.frontmatter] = try Yaml.load(frontmatterString)
+                file.metadata.frontmatter = try Yaml.load(frontmatterString)
             } catch {
                 // A parsing error ocurred. Assume no frontmatter.
                 continue

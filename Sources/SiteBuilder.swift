@@ -31,7 +31,7 @@ public struct SiteBuilder {
 
     public var plugins = [Plugin]()
 
-    public var metadata = [MetadataKey: Any]()
+    public var metadata = Metadata()
 
     public var parsesFrontmatter = true
 

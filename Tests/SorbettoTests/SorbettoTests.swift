@@ -39,14 +39,14 @@ class SorbettoTests: XCTestCase {
                 return
             }
 
-            guard let frontmatter = index.metadata[.frontmatter] as? Yaml else {
-                XCTFail("Frontmatter should have been parsed")
+            guard case .dictionary(let dict)? = index.metadata.frontmatter else {
+                XCTFail("Frontmatter should have been parsed as dictionary")
                 return
             }
 
-            XCTAssertEqual(frontmatter.dictionary?["title"], "An Example")
-            XCTAssertEqual(frontmatter.dictionary?["date"], "2001-01-01")
-            XCTAssertEqual(frontmatter.dictionary?["draft"], false)
+            XCTAssertEqual(dict["title"], "An Example")
+            XCTAssertEqual(dict["date"], "2001-01-01")
+            XCTAssertEqual(dict["draft"], false)
         }
     }
 

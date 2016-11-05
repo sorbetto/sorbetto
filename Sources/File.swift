@@ -3,7 +3,7 @@ import PathKit
 
 public class File {
     fileprivate let sourcePath: Path?
-    public var metadata: [MetadataKey: Any]
+    public var metadata: Metadata
 
     public var contentsIfLoaded: Data?
     public var contents: Data {
@@ -30,10 +30,10 @@ public class File {
     init(sourcePath: Path) {
         assert(sourcePath.isAbsolute)
         self.sourcePath = sourcePath
-        self.metadata = [:]
+        self.metadata = Metadata()
     }
 
-    public init(contents: Data, metadata: [MetadataKey: Any] = [:]) {
+    public init(contents: Data, metadata: Metadata = Metadata()) {
         self.sourcePath = nil
         self.metadata = metadata
         self.contentsIfLoaded = contents
