@@ -2,12 +2,12 @@ import Foundation
 import Yaml
 
 extension MetadataKey {
-    static var frontmatter: MetadataKey {
+    public static var frontmatter: MetadataKey {
         return MetadataKey("frontmatter")
     }
 }
 
-class FrontmatterParser: Plugin {
+public class FrontmatterParser: Plugin {
     fileprivate static let startTag: Data = {
         let tag = "---\n"
         return tag.data(using: .utf8)!
@@ -18,7 +18,10 @@ class FrontmatterParser: Plugin {
         return tag.data(using: .utf8)!
     }()
 
-    func run(site: Site, completionHandler: @escaping (Error?) -> Void) {
+    public init() {
+    }
+
+    public func run(site: Site, completionHandler: @escaping (Error?) -> Void) {
         for path in site.paths {
             guard let file = site[path] else {
                 // A path in `site.paths` should never return a nil file.
