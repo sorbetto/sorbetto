@@ -18,7 +18,7 @@ class FrontmatterParser: Plugin {
         return tag.data(using: .utf8)!
     }()
 
-    func run(site: Site, completionHandler: (Error?) -> Void) {
+    func run(site: Site, completionHandler: @escaping (Error?) -> Void) {
         for path in site.paths {
             guard let file = site[path] else {
                 // A path in `site.paths` should never return a nil file.
