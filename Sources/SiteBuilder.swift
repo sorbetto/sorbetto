@@ -106,7 +106,7 @@ public struct SiteBuilder {
 
     func shouldIgnore(_ path: Path) -> Bool {
         if path.isDirectory {
-            // TODO: Ignore empty directories?
+            // Ignore directories - Directories are created in write() as necessary
             return true
         }
 
