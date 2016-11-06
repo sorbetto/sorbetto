@@ -35,8 +35,6 @@ public struct SiteBuilder {
 
     public var parsesFrontmatter = true
 
-    public var shouldCleanBeforeBuild = true
-
     public var ignoreFilters = [IgnoreFilter]()
 
     public init(directory: Path = Path.current, source: Path = "./src", destination: Path = "./build") {
@@ -83,7 +81,7 @@ public struct SiteBuilder {
         site.run(plugins: plugins, completionHandler: completionHandler)
     }
 
-    public func build(completionHandler: @escaping BuildCompletionHandler) {
+    public func build(shouldClean: Bool = true, completionHandler: @escaping BuildCompletionHandler) {
         process { previousError, site in
             guard previousError == nil else {
                 completionHandler(previousError, site)
@@ -91,7 +89,9 @@ public struct SiteBuilder {
             }
 
             do {
-                try self.cleanIfNeeded()
+                if shouldClean {
+                    try self.removeDestination()
+                }
 
                 for path in site.paths {
                     try self.write(path: path, file: site.memoizedFiles[path])
@@ -146,9 +146,7 @@ public struct SiteBuilder {
         }
     }
 
-    func cleanIfNeeded() throws {
-        if shouldCleanBeforeBuild {
-            try absoluteDestination.delete()
-        }
+    func removeDestination() throws {
+        try absoluteDestination.delete()
     }
 }
