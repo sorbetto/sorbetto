@@ -38,9 +38,7 @@ The included frontmatter parser is itself a plugin.
 
 ## To-Do
 
-The Sorbetto repo itself is almost complete. As the generate is plugin-based,
-all "useful" functionality would be contained in separate plugin repositories.
-This is [README-driven development][rdd]
+The Sorbetto repo itself is almost complete. As the generate is plugin-based, all "useful" functionality would be contained in separate plugin repositories. This is [README-driven development][rdd].
 
 The current implementation is almost core-complete, however, we're currently lacking in plugins, and there is no command line tool yet.
 
