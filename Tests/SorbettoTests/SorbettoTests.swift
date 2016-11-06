@@ -4,7 +4,8 @@ import Yaml
 @testable import Sorbetto
 
 class SorbettoTests: XCTestCase {
-    func makeTest(path: String, completionHandler: @escaping BuildCompletionHandler = { _ in }) throws {
+    @discardableResult
+    func buildTest(path: String) throws -> Site {
         let destination = try Path.uniqueTemporary()
 
         //
@@ -18,35 +19,30 @@ class SorbettoTests: XCTestCase {
         let directoryPath = repoRoot + path
         XCTAssertTrue(directoryPath.isDirectory)
 
-        Sorbetto(directory: directoryPath, destination: destination)
-            .build { error, site in
-                completionHandler(error, site)
-                XCTAssertNil(error)
-            }
+        return try Sorbetto(directory: directoryPath, destination: destination)
+            .build()
     }
 
     func testFixture1() throws {
-        try makeTest(path: "./Fixtures/Sites/01/") { error, site in
-
-        }
+        try buildTest(path: "./Fixtures/Sites/01/")
     }
 
     func testFixture2() throws {
-        try makeTest(path: "./Fixtures/Sites/02/") { error, site in
-            guard let index = site["index.md"] else {
-                XCTFail("index.md should exist")
-                return
-            }
+        let site = try buildTest(path: "./Fixtures/Sites/02/")
 
-            guard case .dictionary(let dict)? = index.metadata.frontmatter else {
-                XCTFail("Frontmatter should have been parsed as dictionary")
-                return
-            }
-
-            XCTAssertEqual(dict["title"], "An Example")
-            XCTAssertEqual(dict["date"], "2001-01-01")
-            XCTAssertEqual(dict["draft"], false)
+        guard let index = site["index.md"] else {
+            XCTFail("index.md should exist")
+            return
         }
+
+        guard case .dictionary(let dict)? = index.metadata.frontmatter else {
+            XCTFail("Frontmatter should have been parsed as dictionary")
+            return
+        }
+
+        XCTAssertEqual(dict["title"], "An Example")
+        XCTAssertEqual(dict["date"], "2001-01-01")
+        XCTAssertEqual(dict["draft"], false)
     }
 
     static var allTests: [(String, (SorbettoTests) -> () throws -> Void)] {

@@ -25,10 +25,9 @@ public class FrontmatterParser: Plugin {
         return tag.data(using: .utf8)!
     }()
 
-    public init() {
-    }
+    public init() {}
 
-    public func run(site: Site, completionHandler: @escaping (Error?) -> Void) {
+    public func run(site: Site) {
         for path in site.paths {
             guard let file = site[path] else {
                 // A path in `site.paths` should never return a nil file.
@@ -61,7 +60,5 @@ public class FrontmatterParser: Plugin {
 
             file.contents = contents.subdata(in: endRange.upperBound ..< contents.count)
         }
-
-        completionHandler(nil)
     }
 }

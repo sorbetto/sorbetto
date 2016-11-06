@@ -1,7 +1,6 @@
 import Foundation
 import PathKit
 
-public typealias BuildCompletionHandler = (_ error: Error?, _ site: Site) -> Void
 public typealias IgnoreFilter = (Path) -> Bool
 
 public struct Sorbetto {
@@ -71,37 +70,31 @@ public struct Sorbetto {
         ignoreFilters.append(filter)
     }
 
-    public func process(completionHandler: @escaping BuildCompletionHandler) {
+    @discardableResult
+    public func process() throws -> Site {
         var plugins = self.plugins
         if parsesFrontmatter {
             plugins.insert(FrontmatterParser(), at: 0)
         }
 
         let site = Site(source: absoluteSource, paths: loadPaths())
-        site.run(plugins: plugins, completionHandler: completionHandler)
+        try site.run(plugins: plugins)
+        return site
     }
 
-    public func build(shouldClean: Bool = true, completionHandler: @escaping BuildCompletionHandler) {
-        process { previousError, site in
-            guard previousError == nil else {
-                completionHandler(previousError, site)
-                return
-            }
+    @discardableResult
+    public func build(shouldClean: Bool = true) throws -> Site {
+        let site = try process()
 
-            do {
-                if shouldClean {
-                    try self.removeDestination()
-                }
-
-                for path in site.paths {
-                    try self.write(path: path, file: site.memoizedFiles[path])
-                }
-
-                completionHandler(nil, site)
-            } catch {
-                completionHandler(error, site)
-            }
+        if shouldClean {
+            try removeDestination()
         }
+
+        for path in site.paths {
+            try write(path: path, file: site.memoizedFiles[path])
+        }
+
+        return site
     }
 
     func shouldIgnore(_ path: Path) -> Bool {
