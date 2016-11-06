@@ -8,11 +8,9 @@ Sorbetto itself is a tiny application, with all logic handled in plugins. For ex
 import Sorbetto
 import SorbettoMarkdown
 
-Sorbetto()
+try! Sorbetto()
     .using(Markdown())
-    .build { error, site in
-
-    }
+    .build()
 ```
 
 To add pagination, just use use another plugin:
@@ -22,12 +20,10 @@ import Sorbetto
 import SorbettoMarkdown
 import SorbettoPagination
 
-Sorbetto()
+try! Sorbetto()
     .using(Markdown())
     .using(Pagination(perPage: 5))
-    .build { error, site in
-
-    }
+    .build()
 ```
 
 ## Usage
