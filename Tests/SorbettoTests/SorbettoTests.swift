@@ -18,12 +18,11 @@ class SorbettoTests: XCTestCase {
         let directoryPath = repoRoot + path
         XCTAssertTrue(directoryPath.isDirectory)
 
-        var builder = SiteBuilder(directory: directoryPath)
-        builder.destination = destination
-        builder.build { error, site in
-            completionHandler(error, site)
-            XCTAssertNil(error)
-        }
+        SiteBuilder(directory: directoryPath, destination: destination)
+            .build { error, site in
+                completionHandler(error, site)
+                XCTAssertNil(error)
+            }
     }
 
     func testFixture1() throws {

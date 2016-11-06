@@ -150,3 +150,35 @@ public struct SiteBuilder {
         try absoluteDestination.delete()
     }
 }
+
+extension SiteBuilder {
+    public func using(_ plugin: Plugin) -> SiteBuilder {
+        var copy = self
+        copy.use(plugin)
+        return copy
+    }
+
+    public func ignoring(_ path: Path) -> SiteBuilder {
+        var copy = self
+        copy.ignore(path)
+        return copy
+    }
+
+    public func ignoring(pattern: String) -> SiteBuilder {
+        var copy = self
+        copy.ignore(pattern: pattern)
+        return copy
+    }
+
+    public func ignoring(_ filter: @escaping IgnoreFilter) -> SiteBuilder {
+        var copy = self
+        copy.ignore(filter)
+        return copy
+    }
+
+    public func parsingFrontmatter(_ shouldParse: Bool) -> SiteBuilder {
+        var copy = self
+        copy.parsesFrontmatter = shouldParse
+        return copy
+    }
+}
