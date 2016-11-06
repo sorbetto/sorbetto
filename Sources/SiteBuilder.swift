@@ -39,7 +39,7 @@ public struct SiteBuilder {
 
     public var ignoreFilters = [IgnoreFilter]()
 
-    public init(directory: Path, source: Path = "./src", destination: Path = "./build") {
+    public init(directory: Path = Path.current, source: Path = "./src", destination: Path = "./build") {
         self.directory = directory
 
         self.source = source
