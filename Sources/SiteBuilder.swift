@@ -12,20 +12,20 @@ public struct SiteBuilder {
     public var directory: Path {
         didSet {
             assert(directory.isAbsolute)
-            absoluteSource = source.absolutePath(relativeTo: directory)
-            absoluteDestination = destination.absolutePath(relativeTo: directory)
+            absoluteSource = source.absolute(relativeTo: directory)
+            absoluteDestination = destination.absolute(relativeTo: directory)
         }
     }
 
     public var source: Path {
         didSet {
-            absoluteSource = source.absolutePath(relativeTo: directory)
+            absoluteSource = source.absolute(relativeTo: directory)
         }
     }
 
     public var destination: Path {
         didSet {
-            absoluteDestination = destination.absolutePath(relativeTo: directory)
+            absoluteDestination = destination.absolute(relativeTo: directory)
         }
     }
 
@@ -41,10 +41,10 @@ public struct SiteBuilder {
         self.directory = directory
 
         self.source = source
-        self.absoluteSource = source.absolutePath(relativeTo: directory)
+        self.absoluteSource = source.absolute(relativeTo: directory)
 
         self.destination = destination
-        self.absoluteDestination = destination.absolutePath(relativeTo: directory)
+        self.absoluteDestination = destination.absolute(relativeTo: directory)
     }
 
     public mutating func use(_ plugin: Plugin) {
@@ -54,7 +54,7 @@ public struct SiteBuilder {
     public mutating func ignore(_ path: Path) {
         let relativePath: Path
         if path.isAbsolute {
-            relativePath = path.relativePath(from: absoluteSource)
+            relativePath = path.relative(from: absoluteSource)
         } else {
             relativePath = path
         }
@@ -123,7 +123,7 @@ public struct SiteBuilder {
         do {
             let children = try absoluteSource.recursiveChildren()
                 .filter { path in !shouldIgnore(path) }
-                .map { path in path.relativePath(from: absoluteSource) }
+                .map { path in path.relative(from: absoluteSource) }
             return Set(children)
         } catch {
             return []
@@ -131,7 +131,7 @@ public struct SiteBuilder {
     }
 
     func write(path: Path, file: File?) throws {
-        let destinationPath = path.absolutePath(relativeTo: absoluteDestination)
+        let destinationPath = path.absolute(relativeTo: absoluteDestination)
 
         let destinationParent = destinationPath.parent()
         if !destinationParent.exists {
@@ -141,7 +141,7 @@ public struct SiteBuilder {
         if let data = file?.contentsIfLoaded {
             try destinationPath.write(data)
         } else {
-            let sourcePath = path.absolutePath(relativeTo: absoluteSource)
+            let sourcePath = path.absolute(relativeTo: absoluteSource)
             try sourcePath.copy(destinationPath)
         }
     }

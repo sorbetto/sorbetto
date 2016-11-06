@@ -1,7 +1,7 @@
 import PathKit
 
 extension Path {
-    func absolutePath(relativeTo directory: Path) -> Path {
+    func absolute(relativeTo directory: Path) -> Path {
         assert(directory.isAbsolute)
         if isAbsolute {
             return self
@@ -10,15 +10,14 @@ extension Path {
         }
     }
 
-    func relativePath(from directory: Path) -> Path {
-        assert(directory.isAbsolute)
+    func relative(from directory: Path) -> Path {
         guard isAbsolute else {
             return self
         }
 
         let components = self.components
         let index: Int = {
-            let directoryComponents = directory.components
+            let directoryComponents = directory.absolute().components
             for (i, (c1, c2)) in zip(components, directoryComponents).enumerated() {
                 if c1 != c2 {
                     return i

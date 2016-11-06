@@ -22,7 +22,7 @@ public class Site {
             if let file = memoizedFiles[path] {
                 return file
             } else if paths.contains(path) {
-                let sourcePath = path.absolutePath(relativeTo: source)
+                let sourcePath = path.absolute(relativeTo: source)
                 let file = File(sourcePath: sourcePath)
                 memoizedFiles[path] = file
                 return file
