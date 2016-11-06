@@ -8,19 +8,16 @@ public class File {
     public var contentsIfLoaded: Data?
     public var contents: Data {
         get {
-            let contents: Data
-            if let _contents = contentsIfLoaded {
-                contents = _contents
+            if let contents = contentsIfLoaded {
+                return contents
             } else if let sourcePath = self.sourcePath, let data = try? sourcePath.read() {
                 contentsIfLoaded = data
-                contents = data
+                return data
             } else {
                 let data = Data()
                 contentsIfLoaded = data
-                contents = data
+                return data
             }
-
-            return contents
         }
         set {
             contentsIfLoaded = newValue
