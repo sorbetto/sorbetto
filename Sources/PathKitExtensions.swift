@@ -6,7 +6,7 @@ extension Path {
         if isAbsolute {
             return self
         } else {
-            return directory + self
+            return (directory + self).absolute()
         }
     }
 
@@ -29,6 +29,5 @@ extension Path {
         }()
         
         return Path(components: components[index ..< components.endIndex])
-
     }
 }
