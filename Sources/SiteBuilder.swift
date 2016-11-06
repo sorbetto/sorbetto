@@ -53,6 +53,26 @@ public struct SiteBuilder {
         plugins.append(plugin)
     }
 
+    public mutating func ignore(_ path: Path) {
+        let relativePath: Path
+        if path.isAbsolute {
+            relativePath = path.relativePath(from: absoluteSource)
+        } else {
+            relativePath = path
+        }
+
+        ignoreFilters.append { $0 == relativePath }
+    }
+
+    public mutating func ignore(pattern: String) {
+        let paths = absoluteSource.glob(pattern)
+        ignoreFilters.append { path in paths.contains(path) }
+    }
+
+    public mutating func ignore(_ filter: @escaping IgnoreFilter) {
+        ignoreFilters.append(filter)
+    }
+
     public func process(completionHandler: @escaping BuildCompletionHandler) {
         var plugins = self.plugins
         if parsesFrontmatter {
@@ -82,26 +102,6 @@ public struct SiteBuilder {
                 completionHandler(error, site)
             }
         }
-    }
-
-    public mutating func ignore(_ path: Path) {
-        let relativePath: Path
-        if path.isAbsolute {
-            relativePath = path.relativePath(from: absoluteSource)
-        } else {
-            relativePath = path
-        }
-
-        ignoreFilters.append { $0 == relativePath }
-    }
-
-    public mutating func ignore(pattern: String) {
-        let paths = absoluteSource.glob(pattern)
-        ignoreFilters.append { path in paths.contains(path) }
-    }
-
-    public mutating func ignore(_ filter: @escaping IgnoreFilter) {
-        ignoreFilters.append(filter)
     }
 
     func shouldIgnore(_ path: Path) -> Bool {
