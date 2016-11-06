@@ -4,7 +4,7 @@ import PathKit
 public typealias BuildCompletionHandler = (_ error: Error?, _ site: Site) -> Void
 public typealias IgnoreFilter = (Path) -> Bool
 
-public struct SiteBuilder {
+public struct Sorbetto {
     var absoluteSource: Path
 
     var absoluteDestination: Path
@@ -151,32 +151,32 @@ public struct SiteBuilder {
     }
 }
 
-extension SiteBuilder {
-    public func using(_ plugin: Plugin) -> SiteBuilder {
+extension Sorbetto {
+    public func using(_ plugin: Plugin) -> Sorbetto {
         var copy = self
         copy.use(plugin)
         return copy
     }
 
-    public func ignoring(_ path: Path) -> SiteBuilder {
+    public func ignoring(_ path: Path) -> Sorbetto {
         var copy = self
         copy.ignore(path)
         return copy
     }
 
-    public func ignoring(pattern: String) -> SiteBuilder {
+    public func ignoring(pattern: String) -> Sorbetto {
         var copy = self
         copy.ignore(pattern: pattern)
         return copy
     }
 
-    public func ignoring(_ filter: @escaping IgnoreFilter) -> SiteBuilder {
+    public func ignoring(_ filter: @escaping IgnoreFilter) -> Sorbetto {
         var copy = self
         copy.ignore(filter)
         return copy
     }
 
-    public func parsingFrontmatter(_ shouldParse: Bool) -> SiteBuilder {
+    public func parsingFrontmatter(_ shouldParse: Bool) -> Sorbetto {
         var copy = self
         copy.parsesFrontmatter = shouldParse
         return copy

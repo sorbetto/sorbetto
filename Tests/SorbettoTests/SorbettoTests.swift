@@ -18,7 +18,7 @@ class SorbettoTests: XCTestCase {
         let directoryPath = repoRoot + path
         XCTAssertTrue(directoryPath.isDirectory)
 
-        SiteBuilder(directory: directoryPath, destination: destination)
+        Sorbetto(directory: directoryPath, destination: destination)
             .build { error, site in
                 completionHandler(error, site)
                 XCTAssertNil(error)

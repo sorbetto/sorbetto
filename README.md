@@ -8,7 +8,7 @@ Sorbetto itself is a tiny application, with all logic handled in plugins. For ex
 import Sorbetto
 import SorbettoMarkdown
 
-SiteBuilder()
+Sorbetto()
     .using(Markdown())
     .build { error, site in
 
@@ -22,7 +22,7 @@ import Sorbetto
 import SorbettoMarkdown
 import SorbettoPagination
 
-SiteBuilder()
+Sorbetto()
     .using(Markdown())
     .using(Pagination(perPage: 5))
     .build { error, site in
